@@ -1,4 +1,5 @@
 #include "cria_arquivo.h"
+#include "palavra.h"
 
 char **textos = NULL;
 int num_textos= 0;

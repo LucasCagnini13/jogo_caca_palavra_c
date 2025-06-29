@@ -8,18 +8,12 @@
 #include <string.h>  // Para strlen, strcpy, strncpy
 #include <stdarg.h>  // Para strlen, strcpy, strncpy
 #include "arquive_log.h" // Inclui o header da sua lib dentro da pasta 'data'
+#include "palavra.h" // para usar tipo Palavra 
 
 // --- Constantes e Estruturas ---
 // Declara que estas variáveis globais existem e serão definidas em cria_arquivo.c
 extern char **textos;
 extern int num_textos;
-
-// Definição da struct Palavra
-typedef struct palavra_s {
-    char palavra[20];
-    int inicio[2];
-    int fim[2];
-} Palavra;
 
 
 int palavra_existe(const char *palavra);
