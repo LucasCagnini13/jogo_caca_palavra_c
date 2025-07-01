@@ -12,7 +12,9 @@ typedef enum {
 } LogLevel;
 
 void log_to_file(const char *filename, LogLevel level, const char *format, ...) ;
-
+void print_erro(int is_print, const char* fmt, ...);
+void print_sucesso(int is_print, const char* fmt, ...);
+void print_aviso(int is_print, const char* fmt, ...);
 
 
 #endif // CRIA_ARQUIVO_H
