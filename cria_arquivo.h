@@ -17,11 +17,12 @@ extern int num_textos;
 
 
 int palavra_existe(const char *palavra);
-void inserir_palavra (const char *nova_palavra);
-void remover_palavra(const char *palavra_a_remover);
-void libera_array();
+void inserir_palavra (int is_print, const char *nova_palavra);
+void remover_palavra(int is_print,const char *palavra_a_remover);
+void atualiza_palavra(int is_print, const char *palavra_anterior, const char *nova_palavra);
+void libera_array(int is_print);
 void mostrar_palavras();
-void inicializar_dicionario();
+void inicializar_dicionario(int valida_para_recriar);
 int main();
 // --- Declarações de Funções ---
 // Funções para sortear e gerenciar listas de palavras em memória
