@@ -49,3 +49,42 @@ void log_to_file(const char *filename, LogLevel level, const char *format, ...) 
 
     fclose(file);
 }
+
+void print_erro(int is_print,const char* fmt, ...) {
+    if (is_print == 1){
+        va_list args;
+        va_start(args, fmt);
+    
+        printf("*********************************\n");
+        printf("\033[1;31mERRO:\033[0m ");
+        vprintf(fmt, args);
+        printf("\n");
+        printf("*********************************\n");
+    
+        va_end(args);
+    }
+}
+
+void print_sucesso(int is_print,const char* fmt, ...) {
+    if (is_print == 1){
+        va_list args;
+        va_start(args, fmt);
+        printf("*********************************\n");
+        printf("\033[1;32mSUCESSO:\033[0m ");
+        vprintf(fmt, args);
+        printf("\n*********************************\n");
+        va_end(args);
+    }
+}
+
+void print_aviso(int is_print,const char* fmt, ...) {
+    if (is_print == 1){
+        va_list args;
+        va_start(args, fmt);
+        printf("*********************************\n");
+        printf("\033[1;33mAVISO:\033[0m ");
+        vprintf(fmt, args);
+        printf("\n*********************************\n");
+        va_end(args);
+    }
+}
