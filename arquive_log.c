@@ -1,6 +1,6 @@
 #include "arquive_log.h"
 
-// Função para converter o nível de log em string
+// Retorna string representando o nível do log
 const char* get_log_level_string(LogLevel level) {
     switch (level) {
         case LOG_INFO: return "INFO";
@@ -11,7 +11,7 @@ const char* get_log_level_string(LogLevel level) {
 }
 
 
-// Função para gravar mensagens formatadas em um arquivo de log
+// Escreve mensagens formatadas em um arquivo de log com timestamp e nível
 void log_to_file(const char *filename, LogLevel level, const char *format, ...)  {
     FILE *file;
     va_list args;
@@ -26,11 +26,10 @@ void log_to_file(const char *filename, LogLevel level, const char *format, ...) 
         return;
     }
 
-    // --- Obter e formatar o timestamp (sem milissegundos) ---
+    // Cria timestamp no formato [YYYY-MM-DD HH:MM:SS] ---
     time(&timer); // Obtém o tempo atual em segundos
     tm_info = localtime(&timer); // Converte para hora local
 
-    // Formata o timestamp: [AAAA-MM-DD HH:MM:SS]
     snprintf(timestamp_buffer, sizeof(timestamp_buffer), "[%04d-%02d-%02d %02d:%02d:%02d]",
              tm_info->tm_year + 1900, // Ano desde 1900
              tm_info->tm_mon + 1,    // Mês (0-11)
@@ -42,7 +41,7 @@ void log_to_file(const char *filename, LogLevel level, const char *format, ...) 
     // Escreve o timestamp e o nível no arquivo
     fprintf(file, "%s [%s] ", timestamp_buffer, get_log_level_string(level));
 
-    // --- Gravar a mensagem formatada ---
+    // Gravar a mensagem formatada
     va_start(args, format);
     vfprintf(file, format, args);
     va_end(args);
@@ -50,6 +49,7 @@ void log_to_file(const char *filename, LogLevel level, const char *format, ...) 
     fclose(file);
 }
 
+// Imprime mensagens formatadas em vermelho (erro)
 void print_erro(int is_print,const char* fmt, ...) {
     if (is_print == 1){
         va_list args;
@@ -65,6 +65,7 @@ void print_erro(int is_print,const char* fmt, ...) {
     }
 }
 
+// Mensagem em verde (sucesso)
 void print_sucesso(int is_print,const char* fmt, ...) {
     if (is_print == 1){
         va_list args;
@@ -77,6 +78,8 @@ void print_sucesso(int is_print,const char* fmt, ...) {
     }
 }
 
+
+// Mensagem em amarelo (aviso)
 void print_aviso(int is_print,const char* fmt, ...) {
     if (is_print == 1){
         va_list args;

@@ -4,6 +4,7 @@
 char **textos = NULL;
 int num_textos= 0;
 
+// Verifica se a palavra já existe no array
 int palavra_existe(const char *palavra){
     for (int i = 0; i < num_textos; i++){
         if(strcmp(textos[i],palavra) ==0){
@@ -13,6 +14,7 @@ int palavra_existe(const char *palavra){
     return 0;
 }
 
+// Insere nova palavra no array, validando tamanho e existência
 void inserir_palavra (int is_print, const char *nova_palavra){
     if (nova_palavra == NULL){
         log_to_file("log_programa.log", LOG_ERROR, "Palavra nao passada na funcao\n");
@@ -47,6 +49,7 @@ void inserir_palavra (int is_print, const char *nova_palavra){
     print_sucesso(is_print,"Palavra '%s' adicionada com sucesso.\n",nova_palavra);
 }
 
+// Remove uma palavra do array, reorganiza memória
 void remover_palavra(int is_print,const char *palavra_a_remover){
     int indice_remover = -1;
     for (int i = 0; i < num_textos; i++){
@@ -84,6 +87,7 @@ void remover_palavra(int is_print,const char *palavra_a_remover){
     }
 }
 
+// Libera toda a memória do array e limpa array de palavras
 void libera_array(int is_print){
     for (int i = 0; i < num_textos; i++){
         free(textos[i]);
@@ -95,6 +99,7 @@ void libera_array(int is_print){
     print_sucesso(is_print,"Lista de palavras foi limpa");
 }
 
+// Mostra todas as palavras do array
 void mostrar_palavras(){
     log_to_file("log_programa.log", LOG_INFO, "\n--- Palavras Atuais no Array (%d) ---\n", num_textos);
     if (num_textos == 0) {
@@ -119,6 +124,7 @@ void mostrar_palavras(){
     log_to_file("log_programa.log", LOG_INFO, "---------------------------------------\n");
 }
 
+// Inicializa o dicionário: recria ou carrega de arquivo binário
 void inicializar_dicionario(int valida_para_recriar) {
     if (valida_para_recriar == 1){
         libera_array(0);
@@ -180,6 +186,7 @@ void inicializar_dicionario(int valida_para_recriar) {
     }
 }
 
+// Sorteia N palavras aleatórias sem repetição
 char **retorna_lista (int numero_lista_nova){
     if (numero_lista_nova <=0 || numero_lista_nova > num_textos){
         log_to_file("log_programa.log", LOG_ERROR, "O numero de sorteio deve ser entre 1 e %d\n", num_textos);
@@ -235,6 +242,7 @@ char **retorna_lista (int numero_lista_nova){
     return textos_aleatorios;
 }
 
+// Converte lista de strings em structs Palavra
 Palavra *converte_array_para_palavra(char **lista_textos, int total_palavras){
     if(lista_textos == NULL || total_palavras <=0){
         log_to_file("log_programa.log",  LOG_ERROR,"Erro: lista de textos invalida ou numero de palavras <=0 \n");
@@ -265,6 +273,7 @@ Palavra *converte_array_para_palavra(char **lista_textos, int total_palavras){
     return lista_palavras;
 } 
 
+// Salva o array em arquivo binário
 int cria_arquivo(){
     FILE *arquivo = NULL;
     if (textos == NULL || num_textos <=0){
@@ -312,6 +321,7 @@ int cria_arquivo(){
     return 0;
 }
 
+// Carrega palavras do arquivo binário para memória
 char **retorna_dados_arquivo(){
     FILE *arquivo = NULL;
     char **lista_palavras = NULL;
@@ -376,6 +386,7 @@ char **retorna_dados_arquivo(){
     return lista_palavras;
 }
 
+// Verifica se arquivo binário existe
 int valida_arquivo_criado(){
     FILE *arquivo = NULL;
     arquivo = fopen("palavras.bin","rb");
@@ -387,6 +398,7 @@ int valida_arquivo_criado(){
     return 1;
 }
 
+// Gerencia fluxo principal para pegar palavras
 Palavra *get_palavras(int numero_de_escolhas, int valida_para_recriar) {
     if (numero_de_escolhas <= 0){
         log_to_file("log_programa.log", LOG_ERROR, "numero menor que 0\n");
@@ -426,6 +438,7 @@ Palavra *get_palavras(int numero_de_escolhas, int valida_para_recriar) {
     return lista_de_palavras_struct; // Indica que o programa terminou com sucesso
 }
 
+// Atualiza uma palavra existente no array
 void atualiza_palavra(int is_print, const char *palavra_anterior, const char *nova_palavra){
     if (nova_palavra == NULL || palavra_anterior == NULL){
         log_to_file("log_programa.log", LOG_ERROR, "Palavras nao passadas na funcao\n");

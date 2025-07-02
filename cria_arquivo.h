@@ -15,7 +15,7 @@
 extern char **textos;
 extern int num_textos;
 
-
+// Funções para manipulação do array de palavras
 int palavra_existe(const char *palavra);
 void inserir_palavra (int is_print, const char *nova_palavra);
 void remover_palavra(int is_print,const char *palavra_a_remover);
